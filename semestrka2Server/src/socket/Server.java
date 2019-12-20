@@ -37,7 +37,7 @@ public class Server {
         while (true) {
             Platform.runLater(this::generateFood);
             if (clients.size() < 5) {
-                out.println("/start")
+
             }
             try {
                 Thread.sleep(3000);
@@ -63,6 +63,9 @@ public class Server {
             this.clientSocket = clientSocket;
             if (clients.size() < 5) {
                 clients.add(this);
+                if(clients.size() == 5){
+                    sendData("/start");
+                }
 
             }
             else {
