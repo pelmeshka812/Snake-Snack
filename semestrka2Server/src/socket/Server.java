@@ -37,8 +37,9 @@ public class Server {
 
 
     public  void sendMessage(String str){
-        String json = writeObjectToJson(str);
-        out.println(json);
+        for (ClientHandler client : clients) {
+            client.out.println(str);
+        }
     }
     private class ClientHandler extends Thread {
         private Socket clientSocket;
@@ -72,10 +73,10 @@ public class Server {
                     if(scanner.next().startsWith("/updateRecord")) {
                         Record record = RecordsDao.get().getByNickname(nickname);
                         int balls = scanner.nextInt();
-                        if (record.getBalls() < balls) {
-                            record.setBalls(balls);
+                        if (record.getValue() < balls) {
+                            record.setValue(balls);
                         }
-                    } else sendMsg(inputLine);
+                    } else sendMessage(inputLine);
                 }
             } catch (IOException e) {
                 throw new IllegalStateException(e);

@@ -15,7 +15,7 @@ public class FoodGenerator extends Thread {
         super(() -> {
             int x = new Random().nextInt(1280);
             int y = new Random().nextInt(720);
-           
+
             socket.sendMessage("/food" + x + " " + y); });
         this.socket = socket;
 

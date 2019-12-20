@@ -29,6 +29,7 @@ public class Client {
         String json = writeObjectToJson(data);
         out.println(json);
     }
+
 //Парсим объект в json
     public String writeObjectToJson(Object data) {
         StringBuilder stringBuilder = new StringBuilder("{");
