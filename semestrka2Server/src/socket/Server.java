@@ -77,7 +77,7 @@ public class Server {
                 nickname = in.readLine();
                 String inputLine;
                 while ((inputLine = in.readLine())!= null){
-                    out.println(inputLine);
+                    sendData(inputLine);
                 }
             } catch (IOException e) {
                 throw new IllegalStateException(e);
