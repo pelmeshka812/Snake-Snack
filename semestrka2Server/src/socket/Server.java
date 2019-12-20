@@ -32,11 +32,22 @@ public class Server {
             }
         }
     }
-    public void sendMessage( String message){
-        for (ClientHandler client: clients) {
-            client.out.println(message);
+
+   public Thread foodGeneratorThread = new Thread(() -> {
+        while (true) {
+            Platform.runLater(this::generateFood);
+            if (clients.size() < 5) {
+                out.println("/start")
+            }
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-    }
+    });
+
+
     public  void sendData(Object data){
         String json = writeObjectToJson(data);
         out.println(json);
@@ -50,9 +61,9 @@ public class Server {
 
         public ClientHandler(Socket clientSocket) {
             this.clientSocket = clientSocket;
-            if (clients.size() <= 5) {
+            if (clients.size() < 5) {
                 clients.add(this);
-                out.println("New snake");
+
             }
             else {
                 out.println("Too many snakes");
@@ -66,6 +77,7 @@ public class Server {
                 nickname = in.readLine();
                 String inputLine;
                 while ((inputLine = in.readLine())!= null){
+                    out.println(inputLine);
                 }
             } catch (IOException e) {
                 throw new IllegalStateException(e);
