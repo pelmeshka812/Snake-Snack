@@ -37,6 +37,10 @@ public class Server {
             client.out.println(message);
         }
     }
+    public  void sendData(Object data){
+        String json = writeObjectToJson(data);
+        out.println(json);
+    }
     private class ClientHandler extends Thread {
         private Socket clientSocket;
         private BufferedReader in;
@@ -46,8 +50,13 @@ public class Server {
 
         public ClientHandler(Socket clientSocket) {
             this.clientSocket = clientSocket;
-            clients.add(this);
-            System.out.println("New snake");
+            if (clients.size() <= 5) {
+                clients.add(this);
+                out.println("New snake");
+            }
+            else {
+                out.println("Too many snakes");
+            }
         }
         public void run() {
             try {

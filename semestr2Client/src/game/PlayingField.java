@@ -32,7 +32,7 @@ public class PlayingField extends Pane {
         }
     });
 
-    private Thread foodGeneratorThread = new Thread(() -> {
+   /* private Thread foodGeneratorThread = new Thread(() -> {
         while (true) {
             Platform.runLater(this::generateFood);
             try {
@@ -41,7 +41,7 @@ public class PlayingField extends Pane {
                 e.printStackTrace();
             }
         }
-    });
+    });*/
 
 
     public PlayingField(int width, int height) {
@@ -50,20 +50,20 @@ public class PlayingField extends Pane {
 
         snake = new Snake(this, new Point(width / 2, height / 2));
         snakeMoverThread.start();
-        foodGeneratorThread.start();
+        //foodGeneratorThread.start();
     }
 
     public void changeSnakeDirection(Direction direction) {
         snake.setDirection(direction);
     }
 
-    private void generateFood() {
+    /*private void generateFood() {
         int x = new Random().nextInt(width);
         int y = new Random().nextInt(height);
         Dot dot = new Dot(this, new Point(x, y));
         dot.setFill(Color.GREEN);
         food.add(dot);
-    }
+    }*/
 
 
     private void addFood(Point point){
@@ -73,7 +73,7 @@ public class PlayingField extends Pane {
     }
     public void gameOver() {
         snakeMoverThread.stop();
-        foodGeneratorThread.stop();
+        //foodGeneratorThread.stop();
 
         getChildren().clear();
         setStyle("-fx-background-color: #000000");

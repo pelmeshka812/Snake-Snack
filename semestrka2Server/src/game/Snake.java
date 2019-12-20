@@ -4,5 +4,5 @@ import java.awt.*;
 import java.util.List;
 
 public class Snake {
-    //List <Point>  point = new
+    List <Point>  point = new
 }
