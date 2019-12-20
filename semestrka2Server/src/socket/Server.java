@@ -33,23 +33,11 @@ public class Server {
         }
     }
 
-   public Thread foodGeneratorThread = new Thread(() -> {
-        while (true) {
-            Platform.runLater(this::generateFood);
-            if (clients.size() < 5) {
-
-            }
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    });
 
 
-    public  void sendData(Object data){
-        String json = writeObjectToJson(data);
+
+    public  void sendMessage(String str){
+        String json = writeObjectToJson(str);
         out.println(json);
     }
     private class ClientHandler extends Thread {
@@ -64,7 +52,7 @@ public class Server {
             if (clients.size() < 5) {
                 clients.add(this);
                 if(clients.size() == 5){
-                    sendData("/start");
+                    sendMessage("/start");
                 }
 
             }
@@ -80,7 +68,14 @@ public class Server {
                 nickname = in.readLine();
                 String inputLine;
                 while ((inputLine = in.readLine())!= null){
-                    sendData(inputLine);
+                    Scanner scanner = new Scanner(inputLine);
+                    if(scanner.next().startsWith("/updateRecord")) {
+                        Record record = RecordsDao.get().getByNickname(nickname);
+                        int balls = scanner.nextInt();
+                        if (record.getBalls() < balls) {
+                            record.setBalls(balls);
+                        }
+                    } else sendMsg(inputLine);
                 }
             } catch (IOException e) {
                 throw new IllegalStateException(e);

@@ -15,9 +15,8 @@ public class FoodGenerator extends Thread {
         super(() -> {
             int x = new Random().nextInt(1280);
             int y = new Random().nextInt(720);
-            Point point = new Point(x, y);
             Gson gson = new Gson();
-            socket.sendMessage(gson.toJson(point)); });
+            socket.sendMessage(gson.toJson("/food" + x + " " + y)); });
         this.socket = socket;
 
     }
