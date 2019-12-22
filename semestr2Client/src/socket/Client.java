@@ -15,6 +15,7 @@ public class Client {
     private BufferedReader in;
     private PrintWriter out;
     private String nickname;
+    private String
 
     public void connect(String ip, int port, String nickname) throws IOException {
         socket = new Socket(ip, port);
@@ -30,7 +31,12 @@ public class Client {
         out.println(json);
     }
 public void setMessageFromServer(String str){
-        if(str.equals(""))
+        Scanner scanner = new Scanner(str);
+        str = scanner.next();
+        if(str.equals("")){
+
+        }
+
 }
 //Парсим объект в json
     public String writeObjectToJson(Object data) {
